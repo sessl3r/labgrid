@@ -100,7 +100,10 @@ class StepReporter:
 
     def _line_format(self, event):
         indent = '  '*event.step.level
-        title = '{}.{}'.format(event.step.source.__class__.__name__, event.step.title)
+        title = '@{:9.6f}: {}:{}.{}'.format(event.ts,
+            event.step.source.target.name,
+            event.step.source.__class__.__name__,
+            event.step.title)
         line = [indent, colors.color(title, style='bold')]
         if event.resource:
             line.append(event.resource)
@@ -169,7 +172,10 @@ class ColoredStepReporter(StepReporter):
     def _line_format(self, event):
         indent = '  '*event.step.level
         color = self.__event_color(event)
-        title = '{}.{}'.format(event.step.source.__class__.__name__, event.step.title)
+        title = '@{:9.6f}: {}:{}.{}'.format(event.ts,
+            event.step.source.target.name,
+            event.step.source.__class__.__name__,
+            event.step.title)
         line = [indent, colors.color(title, fg=color, style='bold')]
         if event.resource:
             line.append(event.resource)
